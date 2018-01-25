@@ -24,18 +24,27 @@ public class ContactListAdapter extends ArrayAdapter<Contact> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View view = convertView;
-        if (view == null) {
-            view = inflater.inflate(android.R.layout.simple_list_item_2, parent, false);
+        final ViewHolder viewHolder;
+
+        if (convertView == null) {
+            convertView = inflater.inflate(android.R.layout.simple_list_item_2, parent, false);
+            viewHolder = new ViewHolder();
+            viewHolder.nameView = convertView.findViewById(android.R.id.text1);
+            viewHolder.phoneNumberView = convertView.findViewById(android.R.id.text2);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
+
         Contact contact = items.get(position);
+        viewHolder.nameView.setText(contact.name);
+        viewHolder.phoneNumberView.setText(contact.phoneNumber);
 
-        TextView nameView = (TextView) view.findViewById(android.R.id.text1);
-        nameView.setText(contact.name);
+        return convertView;
+    }
 
-        TextView phoneNumberView = (TextView) view.findViewById(android.R.id.text2);
-        phoneNumberView.setText(contact.phoneNumber);
-
-        return view;
+    static class ViewHolder {
+        TextView nameView;
+        TextView phoneNumberView;
     }
 }
