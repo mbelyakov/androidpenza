@@ -3,6 +3,7 @@ package com.example.m.androidpenza;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
                 .replace(R.id.fragment_container, newFragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .addToBackStack(null)
                 .commit();
     }
