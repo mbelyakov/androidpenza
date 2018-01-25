@@ -46,11 +46,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/logon_through_social_network"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/continue_button" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/vk_imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,9 +63,9 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logon_through_social_network"
-        app:srcCompat="@android:drawable/btn_dialog" />
+        app:srcCompat="@drawable/vk" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/fb_imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,9 +75,9 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/vk_imageButton"
         app:layout_constraintTop_toBottomOf="@+id/logon_through_social_network"
-        app:srcCompat="@android:drawable/btn_dialog" />
+        app:srcCompat="@drawable/facebook" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/gplus_imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,7 +89,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/fb_imageButton"
         app:layout_constraintTop_toBottomOf="@+id/logon_through_social_network"
-        app:srcCompat="@android:drawable/btn_dialog" />
+        app:srcCompat="@drawable/gplus" />
 
     <TextView
         android:id="@+id/register"
@@ -97,6 +98,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:text="@string/register"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"

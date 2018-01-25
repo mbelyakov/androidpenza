@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 
 public class LoginFragment extends Fragment {
     private OnFragmentInteractionListener listener;
@@ -41,13 +41,13 @@ public class LoginFragment extends Fragment {
                 listener.onFragmentInteraction(OnFragmentInteractionListener.LOGIN_CONTINUE_PRESSED);
         });
 
-        ImageButton vkButton = view.findViewById(R.id.vk_imageButton);
+        ImageView vkButton = view.findViewById(R.id.vk_imageButton);
         vkButton.setOnClickListener((View v) -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com"))));
 
-        ImageButton facebookButton = view.findViewById(R.id.fb_imageButton);
+        ImageView facebookButton = view.findViewById(R.id.fb_imageButton);
         facebookButton.setOnClickListener((View v) -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://facebook.com"))));
 
-        ImageButton gPlusButton = view.findViewById(R.id.gplus_imageButton);
+        ImageView gPlusButton = view.findViewById(R.id.gplus_imageButton);
         gPlusButton.setOnClickListener((View v) -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://plus.google.com"))));
 
         return view;
