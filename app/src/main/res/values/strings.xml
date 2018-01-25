@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">AndroidPenza6</string>
+    <string name="authorization">Авторизация</string>
+    <string name="phone_hint">+79998887766</string>
+    <string name="enter_phone_number">Введите номер телефона</string>
+    <string name="continue_button">Продолжить</string>
+    <string name="logon_through_social_network">Войти через социальную сеть</string>
+    <string name="register">ЗАРЕГИСТРИРОВАТЬСЯ</string>
+    <string name="vkontakte">Вконтакте</string>
+    <string name="facebook">Facebook</string>
+    <string name="gplus">Google plus</string>
+    <string name="sms_send">Вам отправлена смс с кодом</string>
+    <string name="sms_code">Код</string>
+    <string name="i_agree">Я принимаю Пользовательское соглашение</string>
+    <string name="enter">Войти</string>
+    <string name="enter_name">Введите имя</string>
+    <string name="contacts">Контакты</string>
+    <string name="i_am_the_best">Я молодец!</string>
+</resources>
