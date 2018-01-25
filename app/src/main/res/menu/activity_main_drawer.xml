@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_red"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/red_fragment" />
+        <item
+            android:id="@+id/nav_blue"
+            android:icon="@android:drawable/ic_dialog_map"
+            android:title="@string/blue_fragment" />
+        <item
+            android:id="@+id/nav_yellow"
+            android:icon="@android:drawable/btn_star"
+            android:title="@string/yellow_fragment" />
+        <item
+            android:id="@+id/nav_next"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/next" />
+    </group>
+
+</menu>

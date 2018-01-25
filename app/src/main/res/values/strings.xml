@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">AndroidPenza8</string>
+
+    <string name="title_activity_main">Navigation</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="next">Следующий экран</string>
+    <string name="all_navigation_views">Изучаем навигацию по приложению</string>
+    <string name="android">Android</string>
+    <string name="title_activity_info">InfoActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="green_fragment">Зелёный фрагмент</string>
+    <string name="blue_fragment">Синий фрагмент</string>
+    <string name="red_fragment">Красный фрагмент</string>
+    <string name="violet_fragment">Фиолетовый фрагмент</string>
+    <string name="yellow_fragment">Жёлтый фрагмент</string>
+    <string name="cream">Кремовый</string>
+    <string name="amber">Янтарный</string>
+    <string name="tangerine">Мандариновый</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tabbed">Фрагмент с табами</string>
+</resources>
