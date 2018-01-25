@@ -5,23 +5,36 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
 
 public class ContactListFragment extends Fragment {
-    private View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final int MAX_LIST_SIZE = 20;
+        final int PHONE_PREFIX = 8887766;
+
         super.onCreateView(inflater, container, savedInstanceState);
 
-        view = inflater.inflate(R.layout.fragment_contact_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
+        RecyclerView contactList = view.findViewById(R.id.contacts);
+        // Возможено ли получить NPE при вызове getActivity() в данном месте?
+        contactList.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        ArrayList<Contact> items = new ArrayList<>();
+        for (int i = 1; i <= MAX_LIST_SIZE; i++) {
+            items.add(new Contact("Имя Фамилия " + i, "+7999" + (PHONE_PREFIX + i), R.mipmap.ic_launcher_round));
+        }
+        contactList.setAdapter(new ContactListAdapter(items));
+
         return view;
     }
 
@@ -29,23 +42,9 @@ public class ContactListFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Какой-то некрасивый код получился далее, но как его исправить?
-        final int MAX_LIST_SIZE = 20;
-        final int PHONE_PREFIX = 8887766;
-
         Activity activity = getActivity();
-        if (activity == null) {
-            return;
+        if (activity != null) {
+            activity.setTitle(R.string.contacts);
         }
-        activity.setTitle(R.string.contacts);
-
-        ListView lv = view.findViewById(R.id.contacts);
-
-        ArrayList<Contact> items = new ArrayList<>();
-        for (int i = 1; i <= MAX_LIST_SIZE; i++) {
-            items.add(new Contact("Имя Фамилия " + i, "+7999" + (PHONE_PREFIX + i)));
-        }
-        ContactListAdapter adapter = new ContactListAdapter(activity, android.R.layout.simple_list_item_2, items);
-        lv.setAdapter(adapter);
     }
 }
