@@ -8,6 +8,7 @@
         android:id="@+id/sms_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/sms_send" />
@@ -31,8 +32,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/i_agree"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_anchor="@id/sms_code"
         app:layout_anchorGravity="bottom" />
 
