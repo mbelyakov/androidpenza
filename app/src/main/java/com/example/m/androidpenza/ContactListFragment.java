@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public class ContactListFragment extends ListFragment {
 
@@ -28,11 +30,18 @@ public class ContactListFragment extends ListFragment {
     @NonNull
     private ArrayList<Contact> getContacts() {
         final int MAX_LIST_SIZE = 20;
-        final int PHONE_PREFIX = 8887766;
+        final String PHONE_PREFIX = "+79";
+        final int MAX_PHONE_SUFFIX = 1_000_000_000;
+        final String[] NAMES = {"Александр", "Владимир", "Сергей", "Дмитрий", "Алексей", "Андрей", "Николай"};
+        final String[] SURNAMES = {"Пушкин", "Толстой", "Достоевский", "Маяковский", "Гумилёв", "Белинский", "Есенин"};
 
         ArrayList<Contact> items = new ArrayList<>();
+        Random rnd = new Random();
         for (int i = 1; i <= MAX_LIST_SIZE; i++) {
-            items.add(new Contact("Имя Фамилия " + i, "+7999" + (PHONE_PREFIX + i), R.mipmap.ic_launcher_round));
+            String contactName = NAMES[rnd.nextInt(NAMES.length)] + " " + SURNAMES[rnd.nextInt(NAMES.length)];
+            String phoneNumber = PHONE_PREFIX + rnd.nextInt(MAX_PHONE_SUFFIX);
+            items.add(new Contact(contactName, phoneNumber, R.mipmap.ic_launcher_round));
+            Collections.sort(items);
         }
         return items;
     }

@@ -1,9 +1,10 @@
 package com.example.m.androidpenza;
 
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.telephony.PhoneNumberUtils;
 
-public class Contact {
+public class Contact implements Comparable<Contact> {
     String name;
     String phoneNumber;
     int photo;
@@ -16,5 +17,10 @@ public class Contact {
             this.phoneNumber = phoneNumber;
         }
         this.photo = photo;
+    }
+
+    @Override
+    public int compareTo(@NonNull Contact other) {
+        return name.compareTo(other.name);
     }
 }
