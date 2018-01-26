@@ -20,6 +20,7 @@ import com.example.m.androidpenza.fragments.VioletFragment;
 public class InfoActivity extends AppCompatActivity {
 
     private static final String TAG = "InfoActivity";
+    public static final String STATE_NAV_ITEM = "currentNavItem";
 
     private Fragment greenFragment = new GreenFragment();
     private Fragment violetFragment = new VioletFragment();
@@ -60,6 +61,16 @@ public class InfoActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(navListener);
+
+        int currentNavItem = savedInstanceState != null ? savedInstanceState.getInt(STATE_NAV_ITEM) : R.id.nav_green;
+        navigation.setSelectedItemId(currentNavItem);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        outState.putInt(STATE_NAV_ITEM, navigation.getSelectedItemId());
     }
 
     @Override
