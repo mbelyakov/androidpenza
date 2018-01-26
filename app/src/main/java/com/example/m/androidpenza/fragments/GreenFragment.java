@@ -16,8 +16,6 @@ import com.example.m.androidpenza.R;
 
 public class GreenFragment extends Fragment {
 
-//    private View view;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

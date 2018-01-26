@@ -21,6 +21,10 @@ public class InfoActivity extends AppCompatActivity {
 
     private static final String TAG = "InfoActivity";
 
+    private Fragment greenFragment = new GreenFragment();
+    private Fragment violetFragment = new VioletFragment();
+    private Fragment tabbedFragment = new TabbedFragment();
+
     private final BottomNavigationView.OnNavigationItemSelectedListener navListener = item -> {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -28,13 +32,13 @@ public class InfoActivity extends AppCompatActivity {
         Fragment newFragment = null;
         switch (item.getItemId()) {
             case R.id.nav_green:
-                newFragment = new GreenFragment();
+                newFragment = greenFragment;
                 break;
             case R.id.nav_violet:
-                newFragment = new VioletFragment();
+                newFragment = violetFragment;
                 break;
             case R.id.navigation_notifications:
-                newFragment = new TabbedFragment();
+                newFragment = tabbedFragment;
                 break;
         }
         if (newFragment != null) {
@@ -42,7 +46,7 @@ public class InfoActivity extends AppCompatActivity {
         } else {
             Log.w(TAG, "Выбран пункт меню, непредусмотренный в коде");
         }
-        fragmentTransaction.commitNow();
+        fragmentTransaction.commit();
 
         return true;
     };

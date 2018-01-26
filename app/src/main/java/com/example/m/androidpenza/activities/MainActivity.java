@@ -25,10 +25,15 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
 
+    private Fragment redFragment = new RedFragment();
+    private Fragment blueFragment = new BlueFragment();
+    private Fragment yellowFragment = new YellowFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -60,13 +65,13 @@ public class MainActivity extends AppCompatActivity
         Fragment newFragment = null;
         switch (item.getItemId()) {
             case R.id.nav_red:
-                newFragment = new RedFragment();
+                newFragment = redFragment;
                 break;
             case R.id.nav_blue:
-                newFragment = new BlueFragment();
+                newFragment = blueFragment;
                 break;
             case R.id.nav_yellow:
-                newFragment = new YellowFragment();
+                newFragment = yellowFragment;
                 break;
             case R.id.nav_next:
                 startActivity(new Intent(this, InfoActivity.class));

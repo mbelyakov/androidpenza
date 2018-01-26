@@ -17,7 +17,19 @@ import android.widget.TextView;
 
 import com.example.m.androidpenza.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TabbedFragment extends Fragment {
+    List<Fragment> tabs = new ArrayList<>();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        tabs.add(new PlaceholderFragment());
+        tabs.add(new PlaceholderFragment());
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -53,7 +65,7 @@ public class TabbedFragment extends Fragment {
         toolbar.setTitle(title);
     }
 
-    public static class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -61,12 +73,12 @@ public class TabbedFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            return new PlaceholderFragment();
+            return tabs.get(position);
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return tabs.size();
         }
     }
 }
