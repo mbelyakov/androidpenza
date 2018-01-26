@@ -18,9 +18,8 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
 
-    <fragment
+    <FrameLayout
         android:id="@+id/tab_container"
-        android:name="com.example.m.androidpenza.fragments.GreenFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/appBarLayout" />
