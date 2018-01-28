@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">AndroidPenza9</string>
+    <string name="menu_new_contact">Новый</string>
+    <string name="description_photo">Фотография</string>
+    <string name="header_contacts">Контакты</string>
+    <string name="empty_list">Список пуст</string>
+    <string name="button_save">Сохранить</string>
+
+    <string name="hint_first_name">Имя</string>
+    <string name="hint_middle_name">Отчество</string>
+    <string name="hint_surname">Фамилия</string>
+    <string name="hint_phone_number">+79995555555</string>
+
+    <string name="dialog_edit_delete">Что будем делать с контактом?</string>
+    <string name="dialog_edit">Изменить</string>
+    <string name="dialog_delete">Удалить</string>
+</resources>
