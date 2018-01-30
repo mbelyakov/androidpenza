@@ -1,6 +1,7 @@
 package com.example.m.androidpenza;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,18 +17,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.m.androidpenza.databinding.ContactListItemBinding;
+import com.example.m.androidpenza.databinding.FragmentContactListBinding;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class ContactListFragment extends Fragment {
-    @BindView(R.id.contacts_recycler_view) RecyclerView contactsRecyclerView;
-    @BindView(R.id.empty_view) TextView emptyView;
+    private FragmentContactListBinding binding;
     private ContactListAdapter adapter;
     private ContactListCallbacks listener;
     private List<Contact> contacts;
@@ -66,20 +64,17 @@ public class ContactListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-
-        View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
-        ButterKnife.bind(this, view);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_contact_list, container, false);
 
         contacts = AddressBook.getInstance().getContacts();
         adapter = new ContactListAdapter(contacts);
-        contactsRecyclerView.setAdapter(adapter);
-        contactsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.contactsRecyclerView.setAdapter(adapter);
+        binding.contactsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(deleteOnSwipeCallback);
-        itemTouchHelper.attachToRecyclerView(contactsRecyclerView);
+        ItemTouchHelper helper = new ItemTouchHelper(deleteOnSwipeCallback);
+        helper.attachToRecyclerView(binding.contactsRecyclerView);
 
-        return view;
+        return binding.getRoot();
     }
 
     @Override
@@ -90,11 +85,11 @@ public class ContactListFragment extends Fragment {
 
     private void updateUI() {
         if (contacts.size() == 0) {
-            contactsRecyclerView.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
+            binding.contactsRecyclerView.setVisibility(View.GONE);
+            binding.emptyView.setVisibility(View.VISIBLE);
         } else {
-            contactsRecyclerView.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
+            binding.contactsRecyclerView.setVisibility(View.VISIBLE);
+            binding.emptyView.setVisibility(View.GONE);
         }
         adapter.notifyDataSetChanged();
     }
@@ -145,24 +140,17 @@ public class ContactListFragment extends Fragment {
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.contact_surname) TextView surname;
-        @BindView(R.id.contact_first_name) TextView firstName;
-        @BindView(R.id.contact_middle_name) TextView middleName;
-        @BindView(R.id.contact_phone_number) TextView phoneNumber;
-        @BindView(R.id.contact_photo) ImageView photo;
+        private ContactListItemBinding binding;
 
-        ViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.contact_list_item, parent, false));
-            itemView.setOnClickListener(this);
-            ButterKnife.bind(this, itemView);
+        ViewHolder(ContactListItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            binding.setContactViewModel(new ContactViewModel());
         }
 
         void bind(Contact contact) {
-            surname.setText(contact.getSurname());
-            firstName.setText(contact.getFirstName());
-            middleName.setText(contact.getMiddleName());
-            phoneNumber.setText(contact.getPhoneNumber());
-            photo.setImageResource(contact.getPhoto());
+            binding.getContactViewModel().setContact(contact);
+            binding.executePendingBindings();
         }
 
         @Override
@@ -181,7 +169,8 @@ public class ContactListFragment extends Fragment {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
-            return new ViewHolder(inflater, parent);
+            ContactListItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.contact_list_item, parent, false);
+            return new ViewHolder(binding);
         }
 
         @Override

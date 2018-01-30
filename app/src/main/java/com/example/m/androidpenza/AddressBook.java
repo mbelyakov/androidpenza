@@ -42,7 +42,7 @@ class AddressBook {
         contacts.remove(position);
     }
 
-    int getSize() {
+    private int getSize() {
         return contacts.size();
     }
 
