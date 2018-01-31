@@ -24,6 +24,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class ContactListFragment extends Fragment {
     @BindView(R.id.contacts_recycler_view) RecyclerView contactsRecyclerView;
@@ -46,6 +47,7 @@ public class ContactListFragment extends Fragment {
             deleteContactFromList(contactId);
         }
     };
+    private Unbinder unbinder;
 
     @Override
     public void onAttach(Context context) {
@@ -69,7 +71,7 @@ public class ContactListFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         contacts = AddressBook.getInstance().getContacts();
         adapter = new ContactListAdapter(contacts);
@@ -112,6 +114,12 @@ public class ContactListFragment extends Fragment {
                 actionBar.setDisplayHomeAsUpEnabled(false);
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override
@@ -169,6 +177,7 @@ public class ContactListFragment extends Fragment {
         public void onClick(View v) {
             listener.onContactClicked(getAdapterPosition());
         }
+
     }
 
     private class ContactListAdapter extends RecyclerView.Adapter<ViewHolder> {

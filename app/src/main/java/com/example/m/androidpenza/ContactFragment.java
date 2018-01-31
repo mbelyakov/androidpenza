@@ -16,6 +16,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Use the {@link ContactFragment#newInstance} factory method to
@@ -28,6 +29,7 @@ public class ContactFragment extends Fragment {
     @BindView(R.id.middle_name) TextView middleName;
     @BindView(R.id.surname) TextView surname;
     @BindView(R.id.phone_number) TextView phoneNumber;
+    private Unbinder unbinder;
     private Contact contact;
     private boolean createNewContact;
 
@@ -69,7 +71,8 @@ public class ContactFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
-        ButterKnife.bind(this, view);
+
+        unbinder = ButterKnife.bind(this, view);
 
         firstName.setText(contact.getFirstName());
         middleName.setText(contact.getMiddleName());
@@ -103,6 +106,12 @@ public class ContactFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @OnClick(R.id.save_button)
