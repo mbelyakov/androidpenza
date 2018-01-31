@@ -1,90 +1,110 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.m.androidpenza.ContactViewModel" />
+
+        <variable
+            name="fragment"
+            type="com.example.m.androidpenza.ContactFragment" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/photo"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/description_photo"
-            android:scaleType="centerCrop"
-            tools:src="@mipmap/ic_launcher" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/surname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/first_name"
-            android:layout_alignStart="@+id/first_name"
-            android:layout_below="@+id/photo"
-            android:hint="@string/hint_surname"
-            android:inputType="textPersonName"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            tools:text="Пушкин" />
+            <ImageView
+                android:id="@+id/contact_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/description_photo"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher_round"
+                tools:src="@mipmap/ic_launcher" />
 
-        <EditText
-            android:id="@+id/first_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/surname"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:hint="@string/hint_first_name"
-            android:inputType="textPersonName"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            tools:text="Александр" />
+            <EditText
+                android:id="@+id/contact_surname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/contact_first_name"
+                android:layout_alignStart="@+id/contact_first_name"
+                android:layout_below="@+id/contact_photo"
+                android:hint="@string/hint_surname"
+                android:inputType="textPersonName"
+                android:text="@{viewModel.surname}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                tools:text="Пушкин" />
 
-        <EditText
-            android:id="@+id/middle_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/surname"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_toEndOf="@id/first_name"
-            android:layout_toRightOf="@id/first_name"
-            android:hint="@string/hint_middle_name"
-            android:inputType="textPersonName"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            tools:text="Сергеевич" />
+            <EditText
+                android:id="@+id/contact_first_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contact_surname"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:hint="@string/hint_first_name"
+                android:inputType="textPersonName"
+                android:text="@{viewModel.firstName}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                tools:text="Александр" />
 
-        <EditText
-            android:id="@+id/phone_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/first_name"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:hint="@string/hint_phone_number"
-            android:inputType="phone"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            tools:text="+7 999 555-55-55" />
+            <EditText
+                android:id="@+id/contact_middle_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contact_surname"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@id/contact_first_name"
+                android:layout_toRightOf="@id/contact_first_name"
+                android:hint="@string/hint_middle_name"
+                android:inputType="textPersonName"
+                android:text="@{viewModel.middleName}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                tools:text="Сергеевич" />
 
-        <Button
-            android:id="@+id/save_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:text="@string/button_save" />
-    </RelativeLayout>
-</ScrollView>
+            <EditText
+                android:id="@+id/contact_phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contact_first_name"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:hint="@string/hint_phone_number"
+                android:inputType="phone"
+                android:text="@{viewModel.phoneNumber}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                tools:text="+7 999 555-55-55" />
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:onClick="@{() -> fragment.saveContact()}"
+                android:text="@string/button_save" />
+        </RelativeLayout>
+    </ScrollView>
+</layout>

@@ -145,13 +145,13 @@ public class ContactListFragment extends Fragment {
         ViewHolder(ContactListItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            binding.setContactViewModel(new ContactListViewModel());
+            binding.setViewModel(new ContactListViewModel());
             // TODO: 31.01.2018 Разобраться как установить listener в layout
             itemView.setOnClickListener(this);
         }
 
         void bind(Contact contact) {
-            binding.getContactViewModel().setContact(contact);
+            binding.getViewModel().setContact(contact);
             binding.executePendingBindings();
         }
 

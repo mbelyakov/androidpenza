@@ -1,5 +1,6 @@
 package com.example.m.androidpenza;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,12 +11,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import com.example.m.androidpenza.databinding.FragmentContactBinding;
+
 
 /**
  * Use the {@link ContactFragment#newInstance} factory method to
@@ -23,13 +21,9 @@ import butterknife.OnClick;
  */
 public class ContactFragment extends Fragment {
     private static final String CONTACT_ID = "contact_id";
-    @BindView(R.id.photo) ImageView photo;
-    @BindView(R.id.first_name) TextView firstName;
-    @BindView(R.id.middle_name) TextView middleName;
-    @BindView(R.id.surname) TextView surname;
-    @BindView(R.id.phone_number) TextView phoneNumber;
     private Contact contact;
     private boolean createNewContact;
+    private FragmentContactBinding binding;
 
     /**
      * Use this factory method to create a new instance of
@@ -68,16 +62,10 @@ public class ContactFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_contact, container, false);
-        ButterKnife.bind(this, view);
-
-        firstName.setText(contact.getFirstName());
-        middleName.setText(contact.getMiddleName());
-        surname.setText(contact.getSurname());
-        phoneNumber.setText(contact.getPhoneNumber());
-        photo.setImageResource(contact.getPhoto());
-
-        return view;
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_contact, container, false);
+        binding.setViewModel(new ContactViewModel());
+        binding.getViewModel().setContact(contact);
+        return binding.getRoot();
     }
 
     @Override
@@ -105,8 +93,11 @@ public class ContactFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.save_button)
+    //    @OnClick(R.id.save_button)
     public void saveContact() {
+        // TODO: 31.01.2018 Как же прописать в layout вызов этого метода при клике по кнопке "Сохранить"?
+        // Текущий способ компилируется и сгенерированный код выглядит корректным, но saveContact не вызывается
+        // Затем этот метод надо вынести во ViewModel
         if (createNewContact) {
             createNewContact();
         } else {
@@ -117,19 +108,19 @@ public class ContactFragment extends Fragment {
     }
 
     private void createNewContact() {
-        Contact newContact = new Contact(
-                firstName.getText().toString(),
-                middleName.getText().toString(),
-                surname.getText().toString(),
-                phoneNumber.getText().toString(),
-                R.mipmap.ic_launcher_round);
-        AddressBook.getInstance().addContact(newContact);
+//        Contact newContact = new Contact(
+//                firstName.getText().toString(),
+//                middleName.getText().toString(),
+//                surname.getText().toString(),
+//                phoneNumber.getText().toString(),
+//                R.mipmap.ic_launcher_round);
+//        AddressBook.getInstance().addContact(newContact);
     }
 
     private void updateContact() {
-        contact.setFirstName(firstName.getText().toString());
-        contact.setMiddleName(middleName.getText().toString());
-        contact.setSurname(surname.getText().toString());
-        contact.setPhoneNumber(phoneNumber.getText().toString());
+//        contact.setFirstName(firstName.getText().toString());
+//        contact.setMiddleName(middleName.getText().toString());
+//        contact.setSurname(surname.getText().toString());
+//        contact.setPhoneNumber(phoneNumber.getText().toString());
     }
 }
