@@ -3,7 +3,7 @@ package com.example.m.androidpenza;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-public class ContactViewModel extends BaseObservable {
+public class ContactListViewModel extends BaseObservable {
     private Contact contact;
 
     @Bindable

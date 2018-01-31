@@ -8,7 +8,7 @@
 
         <variable
             name="contactViewModel"
-            type="com.example.m.androidpenza.ContactViewModel" />
+            type="com.example.m.androidpenza.ContactListViewModel" />
     </data>
 
     <android.support.v7.widget.CardView
