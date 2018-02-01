@@ -87,6 +87,7 @@ public class ContactListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        adapter.notifyDataSetChanged();
         updateUI();
     }
 
@@ -98,7 +99,6 @@ public class ContactListFragment extends Fragment {
             contactsRecyclerView.setVisibility(View.VISIBLE);
             emptyView.setVisibility(View.GONE);
         }
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -142,6 +142,7 @@ public class ContactListFragment extends Fragment {
 
     public void deleteContactFromList(int contactId) {
         AddressBook.getInstance().deleteContact(contactId);
+        adapter.notifyItemRemoved(contactId);
         updateUI();
     }
 
