@@ -1,5 +1,6 @@
 package com.example.m.androidpenza;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.m.androidpenza.model.AddressBook;
+import com.example.m.androidpenza.model.Contact;
+
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,10 +46,10 @@ public class ContactFragment extends Fragment {
      * @param contactId Position of contact in list
      * @return A new instance of fragment ContactFragment.
      */
-    public static ContactFragment newInstance(int contactId) {
+    public static ContactFragment newInstance(UUID contactId) {
         ContactFragment fragment = new ContactFragment();
         Bundle args = new Bundle();
-        args.putInt(CONTACT_ID, contactId);
+        args.putString(CONTACT_ID, contactId.toString());
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,10 +62,11 @@ public class ContactFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        setMenuVisibility(true);
 
         if (getArguments() != null) {
-            int contactId = getArguments().getInt(CONTACT_ID);
-            contact = AddressBook.getInstance().getContact(contactId);
+            UUID contactId = UUID.fromString(getArguments().getString(CONTACT_ID));
+            contact = AddressBook.getInstance(getActivity()).getContact(contactId);
             createNewContact = false;
         } else {
             contact = new Contact();
@@ -102,16 +109,10 @@ public class ContactFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            getActivity().onBackPressed();
+            exitFromFragment();
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     @OnClick(R.id.save_button)
@@ -121,24 +122,38 @@ public class ContactFragment extends Fragment {
         } else {
             updateContact();
         }
-        // TODO: 28.01.2018 Корявый возврат к списку контактов. Подумать как сделать правильно.
-        getActivity().onBackPressed();
+        exitFromFragment();
+    }
+
+    private void exitFromFragment() {
+        // TODO: 28.01.2018 Med Корявый возврат к списку контактов. Как же сделать правильно?
+        Activity activity = getActivity();
+        if (activity != null) {
+            getActivity().onBackPressed();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     private void createNewContact() {
-        Contact newContact = new Contact(
-                firstName.getText().toString(),
-                middleName.getText().toString(),
-                surname.getText().toString(),
-                phoneNumber.getText().toString(),
-                R.mipmap.ic_launcher_round);
-        AddressBook.getInstance().addContact(newContact);
+        Contact newContact = new Contact()
+                .setFirstName(firstName.getText().toString())
+                .setMiddleName(middleName.getText().toString())
+                .setSurname(surname.getText().toString())
+                .setPhoneNumber(phoneNumber.getText().toString());
+        AddressBook.getInstance(getActivity()).addContact(newContact);
     }
 
     private void updateContact() {
+        // TODO: 03.02.2018 цвет
         contact.setFirstName(firstName.getText().toString());
         contact.setMiddleName(middleName.getText().toString());
         contact.setSurname(surname.getText().toString());
         contact.setPhoneNumber(phoneNumber.getText().toString());
+        AddressBook.getInstance(getActivity()).updateContact(contact);
     }
 }

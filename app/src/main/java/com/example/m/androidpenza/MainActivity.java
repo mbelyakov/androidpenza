@@ -6,17 +6,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
+
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity
         implements ContactListFragment.ContactListCallbacks, EditDeleteDialogFragment.EditDeleteDialogCallbacks {
 
+    private static final String POSITION = "position";
     private static final String CONTACT_ID = "contact_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -32,23 +37,29 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onContactClicked(int contactId) {
+    public void onContactClicked(int position, UUID contactId) {
         DialogFragment dialog = new EditDeleteDialogFragment();
         Bundle args = new Bundle();
-        args.putInt(CONTACT_ID, contactId);
+        args.putString(CONTACT_ID, contactId.toString());
+        args.putInt(POSITION, position);
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "edit_delete");
     }
 
     @Override
-    public void onNewContactPressed() {
+    public void onNewContactClicked() {
         gotoFragment(ContactFragment.newInstance());
+    }
+
+    @Override
+    public void onSettingsClicked() {
+        gotoFragment(new SettingsFragment());
     }
 
     @Override
     public void onDialogEditClick(DialogFragment dialog) {
         if (dialog.getArguments() != null) {
-            int contactId = dialog.getArguments().getInt(CONTACT_ID);
+            UUID contactId = UUID.fromString(dialog.getArguments().getString(CONTACT_ID));
             gotoFragment(ContactFragment.newInstance(contactId));
         }
     }
@@ -65,9 +76,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDialogDeleteClick(DialogFragment dialog) {
         if (dialog.getArguments() != null) {
-            int contactId = dialog.getArguments().getInt(CONTACT_ID);
+            UUID contactId = UUID.fromString(dialog.getArguments().getString(CONTACT_ID));
             ContactListFragment fragment = (ContactListFragment) getSupportFragmentManager().findFragmentById(R.id.container);
-            fragment.deleteContactFromList(contactId);
+            int position = dialog.getArguments().getInt(POSITION);
+            fragment.deleteContact(position, contactId);
         }
     }
 }

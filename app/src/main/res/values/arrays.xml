@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_fontSizes">
+        <item>@string/pref_size_small</item>
+        <item>@string/pref_size_medium</item>
+        <item>@string/pref_size_large</item>
+    </string-array>
+    <string-array name="pref_fontSizes_values">
+        <item>@string/pref_size_small_value</item>
+        <item>@string/pref_size_medium_value</item>
+        <item>@string/pref_size_large_value</item>
+    </string-array>
+
+    <string-array name="pref_sortOrder">
+        <item>@string/pref_sort_date</item>
+        <item>@string/pref_sort_az</item>
+        <item>@string/pref_sort_za</item>
+    </string-array>
+    <string-array name="pref_sortOrder_values">
+        <item>@string/pref_sort_date_value</item>
+        <item>@string/pref_sort_az_value</item>
+        <item>@string/pref_sort_za_value</item>
+    </string-array>
+
+    <string-array name="pref_scrollSpeed">
+        <item>@string/pref_scrollSpeed_none</item>
+        <item>@string/pref_scrollSpeed_normal</item>
+        <item>@string/pref_scrollSpeed_fast</item>
+    </string-array>
+    <string-array name="pref_scrollSpeed_values">
+        <item>@string/pref_scrollSpeed_none_value</item>
+        <item>@string/pref_scrollSpeed_normal_value</item>
+        <item>@string/pref_scrollSpeed_fast_value</item>
+    </string-array>
+
+    <string-array name="pref_db">
+        <item>@string/pref_db_sqlite</item>
+        <item>@string/pref_db_realm</item>
+    </string-array>
+    <string-array name="pref_db_values">
+        <item>@string/pref_db_sqlite_value</item>
+        <item>@string/pref_db_realm_value</item>
+    </string-array>
+</resources>

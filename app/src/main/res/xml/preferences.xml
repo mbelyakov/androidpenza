@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/pref_view">
+        <ListPreference
+            android:defaultValue="@string/pref_size_medium_value"
+            android:entries="@array/pref_fontSizes"
+            android:entryValues="@array/pref_fontSizes_values"
+            android:key="pref_fontSize"
+            android:persistent="true"
+            android:title="@string/pref_fontSize" />
+        <ListPreference
+            android:defaultValue="@string/pref_sort_az_value"
+            android:entries="@array/pref_sortOrder"
+            android:entryValues="@array/pref_sortOrder_values"
+            android:key="pref_sortOrder"
+            android:persistent="true"
+            android:title="@string/pref_sortOrder" />
+        <ListPreference
+            android:defaultValue="@string/pref_scrollSpeed_normal_value"
+            android:entries="@array/pref_scrollSpeed"
+            android:entryValues="@array/pref_scrollSpeed_values"
+            android:key="pref_scrollSpeed"
+            android:persistent="true"
+            android:title="@string/pref_scrollSpeed" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_storage">
+        <ListPreference
+            android:defaultValue="@string/pref_db_sqlite_value"
+            android:entries="@array/pref_db"
+            android:entryValues="@array/pref_db_values"
+            android:key="pref_db"
+            android:persistent="true"
+            android:title="@string/pref_database" />
+    </PreferenceCategory>
+</PreferenceScreen>
