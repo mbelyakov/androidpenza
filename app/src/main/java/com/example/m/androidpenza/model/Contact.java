@@ -1,5 +1,6 @@
 package com.example.m.androidpenza.model;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.telephony.PhoneNumberUtils;
 
@@ -27,7 +28,7 @@ public class Contact {
         this.phoneNumber = "";
         this.photo = R.mipmap.ic_launcher_round;
         this.createDate = new Date();
-        this.color = R.color.defaultCardBackground; //todo получить значение ресурса
+        this.color = Color.WHITE;
     }
 
     public int getColor() {

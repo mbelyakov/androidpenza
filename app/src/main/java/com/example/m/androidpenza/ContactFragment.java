@@ -1,6 +1,7 @@
 package com.example.m.androidpenza;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.m.androidpenza.model.AddressBook;
 import com.example.m.androidpenza.model.Contact;
+import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 
 import java.util.UUID;
 
@@ -35,8 +37,10 @@ public class ContactFragment extends Fragment {
     @BindView(R.id.middle_name) TextView middleName;
     @BindView(R.id.surname) TextView surname;
     @BindView(R.id.phone_number) TextView phoneNumber;
+    @BindView(R.id.card) View card;
     private Unbinder unbinder;
     private Contact contact;
+    private int cardColor;
     private boolean createNewContact;
 
     /**
@@ -86,7 +90,8 @@ public class ContactFragment extends Fragment {
         surname.setText(contact.getSurname());
         phoneNumber.setText(contact.getPhoneNumber());
         photo.setImageResource(contact.getPhoto());
-
+        card.setBackgroundColor(contact.getColor());
+        cardColor = contact.getColor();
         return view;
     }
 
@@ -116,13 +121,24 @@ public class ContactFragment extends Fragment {
     }
 
     @OnClick(R.id.save_button)
-    public void saveContact() {
+    void saveContact() {
         if (createNewContact) {
             createNewContact();
         } else {
             updateContact();
         }
         exitFromFragment();
+    }
+
+    @OnClick(R.id.color_button)
+    void pickColor() {
+        final ColorPicker cp = new ColorPicker(getActivity(), Color.alpha(cardColor),
+                Color.red(cardColor), Color.green(cardColor), Color.blue(cardColor));
+        cp.show();
+        cp.setCallback(color -> {
+            cardColor = color;
+            card.setBackgroundColor(color);
+        });
     }
 
     private void exitFromFragment() {
@@ -144,16 +160,17 @@ public class ContactFragment extends Fragment {
                 .setFirstName(firstName.getText().toString())
                 .setMiddleName(middleName.getText().toString())
                 .setSurname(surname.getText().toString())
-                .setPhoneNumber(phoneNumber.getText().toString());
+                .setPhoneNumber(phoneNumber.getText().toString())
+                .setColor(cardColor);
         AddressBook.getInstance(getActivity()).addContact(newContact);
     }
 
     private void updateContact() {
-        // TODO: 03.02.2018 цвет
         contact.setFirstName(firstName.getText().toString());
         contact.setMiddleName(middleName.getText().toString());
         contact.setSurname(surname.getText().toString());
         contact.setPhoneNumber(phoneNumber.getText().toString());
+        contact.setColor(cardColor);
         AddressBook.getInstance(getActivity()).updateContact(contact);
     }
 }

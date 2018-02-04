@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -38,9 +39,16 @@ import butterknife.Unbinder;
 public class ContactListFragment extends Fragment {
     @BindView(R.id.contacts_recycler_view) SpeedyRecyclerView contactsRecyclerView;
     @BindView(R.id.empty_view) TextView emptyView;
+    // Вопрос: Мне нужны константы, иницилизированные значениями из strings.xml, но объявить их
+    // как final нельзя, так как они не инициализируются при создании экземпляра объекта. Я дал
+    // им названия как константам, но это может ввести в заблужение. Как поступить? Переименовать
+    // в стиле переменных?
     @BindString(R.string.pref_sort_date_value) String SORT_BY_DATE;
     @BindString(R.string.pref_sort_az_value) String SORT_BY_NAME_AZ;
     @BindString(R.string.pref_sort_za_value) String SORT_BY_NAME_ZA;
+    @BindString(R.string.key_pref_fontSize) String KEY_PREF_FONT_SIZE;
+    @BindString(R.string.key_pref_sortOrder) String KEY_PREF_SORT_ORDER;
+    @BindString(R.string.key_pref_scrollSpeed) String KEY_PREF_SCROLL_SPEED;
     private Unbinder unbinder;
 
     private ContactListAdapter adapter;
@@ -113,10 +121,9 @@ public class ContactListFragment extends Fragment {
     @SuppressWarnings("ConstantConditions")
     private void loadPreferences() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        // TODO: 03.02.2018 заменить строки на ресурсы
-        baseFontSize = sharedPref.getString("pref_fontSize", null);
-        sortOrder = sharedPref.getString("pref_sortOrder", null);
-        scrollSpeed = sharedPref.getString("pref_scrollSpeed", null);
+        baseFontSize = sharedPref.getString(KEY_PREF_FONT_SIZE, null);
+        sortOrder = sharedPref.getString(KEY_PREF_SORT_ORDER, null);
+        scrollSpeed = sharedPref.getString(KEY_PREF_SCROLL_SPEED, null);
     }
 
     private void updateUI() {
@@ -203,6 +210,7 @@ public class ContactListFragment extends Fragment {
         @BindView(R.id.contact_middle_name) TextView middleName;
         @BindView(R.id.contact_phone_number) TextView phoneNumber;
         @BindView(R.id.contact_photo) ImageView photo;
+        @BindView(R.id.contact_card) CardView card;
 
         ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.contact_list_item, parent, false));
@@ -222,6 +230,7 @@ public class ContactListFragment extends Fragment {
             middleName.setText(contact.getMiddleName());
             phoneNumber.setText(contact.getPhoneNumber());
             photo.setImageResource(contact.getPhoto());
+            card.setCardBackgroundColor(contact.getColor());
         }
 
         @Override

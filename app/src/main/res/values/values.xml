@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="key_pref_fontSize">pref_fontSize</string>
+    <string name="pref_size_small_value">14</string>
+    <string name="pref_size_medium_value">18</string>
+    <string name="pref_size_large_value">22</string>
+
+    <string name="key_pref_sortOrder">pref_sortOrder</string>
+    <string name="pref_sort_date_value">date</string>
+    <string name="pref_sort_az_value">name_az</string>
+    <string name="pref_sort_za_value">name_za</string>
+
+    <string name="key_pref_scrollSpeed">pref_scrollSpeed</string>
+    <string name="pref_scrollSpeed_none_value">0</string>
+    <string name="pref_scrollSpeed_normal_value">1</string>
+    <string name="pref_scrollSpeed_fast_value">10</string>
+
+    <string name="key_pref_db">pref_db</string>
+    <string name="pref_db_sqlite_value">sqlite</string>
+    <string name="pref_db_realm_value">realm</string>
+</resources>

@@ -49,7 +49,7 @@ public class ContactDbHelper extends SQLiteOpenHelper {
     }
 
     private void initContacts(SQLiteDatabase db) {
-        final int MAX_LIST_SIZE = 100;
+        final int MAX_LIST_SIZE = 20;
         final String PHONE_PREFIX = "+79";
         final int MAX_PHONE_SUFFIX = 1_000_000_000;
         final String[] FIRST_NAMES = {"Александр", "Владимир", "Сергей", "Дмитрий", "Алексей", "Андрей", "Николай"};
@@ -70,7 +70,8 @@ public class ContactDbHelper extends SQLiteOpenHelper {
                         .setFirstName(firstName)
                         .setMiddleName(middleName)
                         .setSurname(surname)
-                        .setPhoneNumber(phoneNumber);
+                        .setPhoneNumber(phoneNumber)
+                        .setColor(rnd.nextInt());
                 ContentValues values = AddressBook.getContentValues(contact);
                 long newRowId = db.insert(TABLE_NAME, null, values);
                 if (newRowId == -1) {

@@ -1,15 +1,16 @@
 <resources>
     <string name="app_name">AndroidPenza10</string>
     <string name="menu_new_contact">Новый</string>
-    <string name="description_photo">Фотография</string>
     <string name="header_contacts">Контакты</string>
     <string name="empty_list">Список пуст</string>
-    <string name="button_save">Сохранить</string>
 
+    <string name="description_photo">Фотография</string>
     <string name="hint_first_name">Имя</string>
     <string name="hint_middle_name">Отчество</string>
     <string name="hint_surname">Фамилия</string>
     <string name="hint_phone_number">+79995555555</string>
+    <string name="button_color">Цвет</string>
+    <string name="button_save">Сохранить</string>
 
     <string name="dialog_edit_delete">Что будем делать с контактом?</string>
     <string name="dialog_edit">Изменить</string>
@@ -23,31 +24,20 @@
     <string name="pref_size_small">Мелкий</string>
     <string name="pref_size_medium">Средний</string>
     <string name="pref_size_large">Крупный</string>
-    <string name="pref_size_small_value">14</string>
-    <string name="pref_size_medium_value">18</string>
-    <string name="pref_size_large_value">22</string>
 
     <string name="pref_sortOrder">Сортировка контактов</string>
     <string name="pref_sort_date">По дате добавления</string>
     <string name="pref_sort_az">По алфавиту (А - Я)</string>
     <string name="pref_sort_za">По алфавиту (Я - А)</string>
-    <string name="pref_sort_date_value">date</string>
-    <string name="pref_sort_az_value">name_az</string>
-    <string name="pref_sort_za_value">name_za</string>
 
     <string name="pref_scrollSpeed">Инерция прокрутки списка</string>
     <string name="pref_scrollSpeed_none">Отсутствует</string>
     <string name="pref_scrollSpeed_normal">Нормальная</string>
     <string name="pref_scrollSpeed_fast">Вжу-у-х!</string>
-    <string name="pref_scrollSpeed_none_value">0</string>
-    <string name="pref_scrollSpeed_normal_value">1</string>
-    <string name="pref_scrollSpeed_fast_value">10</string>
 
     <string name="pref_storage">Хранение</string>
 
     <string name="pref_database">База данных</string>
     <string name="pref_db_sqlite">SQLite</string>
     <string name="pref_db_realm">Realm</string>
-    <string name="pref_db_sqlite_value">sqlite</string>
-    <string name="pref_db_realm_value">realm</string>
 </resources>
