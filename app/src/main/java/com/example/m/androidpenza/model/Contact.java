@@ -1,7 +1,11 @@
 package com.example.m.androidpenza.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.telephony.PhoneNumberUtils;
 
 import com.example.m.androidpenza.R;
@@ -10,12 +14,16 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.UUID;
 
+@Entity
 public class Contact {
+    @PrimaryKey
+    @ColumnInfo(name = "_id")
+    @NonNull
     private UUID id;
     private String firstName;
     private String middleName;
     private String surname;
-    private String phoneNumber;
+    private String phoneNumber; // TODO: 07.02.2018 @NonNull?
     private int photo;
     private Date createDate;
     private int color;
@@ -35,54 +43,49 @@ public class Contact {
         return color;
     }
 
-    public Contact setColor(int color) {
+    public void setColor(int color) {
         this.color = color;
-        return this;
     }
 
+    @NonNull
     public UUID getId() {
         return id;
     }
 
-    public Contact setId(UUID id) {
+    public void setId(@NonNull UUID id) {
         this.id = id;
-        return this;
     }
 
     public Date getCreateDate() {
         return createDate;
     }
 
-    public Contact setCreateDate(Date createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
-        return this;
     }
 
     public String getMiddleName() {
         return middleName;
     }
 
-    public Contact setMiddleName(String middleName) {
+    public void setMiddleName(String middleName) {
         this.middleName = middleName;
-        return this;
     }
 
     public String getSurname() {
         return surname;
     }
 
-    public Contact setSurname(String surname) {
+    public void setSurname(String surname) {
         this.surname = surname;
-        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public Contact setFirstName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
-        return this;
     }
 
     public String getPhoneNumber() {
@@ -93,18 +96,16 @@ public class Contact {
         return formatedNumber != null ? formatedNumber : phoneNumber;
     }
 
-    public Contact setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-        return this;
     }
 
     public int getPhoto() {
         return photo;
     }
 
-    public Contact setPhoto(int photo) {
+    public void setPhoto(int photo) {
         this.photo = photo;
-        return this;
     }
 
     public static class DateComparator implements Comparator<Contact> {

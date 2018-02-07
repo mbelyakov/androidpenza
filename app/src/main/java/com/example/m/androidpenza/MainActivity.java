@@ -76,10 +76,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDialogDeleteClick(DialogFragment dialog) {
         if (dialog.getArguments() != null) {
-            UUID contactId = UUID.fromString(dialog.getArguments().getString(CONTACT_ID));
             ContactListFragment fragment = (ContactListFragment) getSupportFragmentManager().findFragmentById(R.id.container);
             int position = dialog.getArguments().getInt(POSITION);
-            fragment.deleteContact(position, contactId);
+            fragment.deleteContact(position);
         }
     }
 }

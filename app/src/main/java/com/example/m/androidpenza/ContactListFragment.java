@@ -24,7 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.m.androidpenza.model.AddressBook;
+import com.example.m.androidpenza.database.AddressBook;
 import com.example.m.androidpenza.model.Contact;
 
 import java.util.Collections;
@@ -71,7 +71,7 @@ public class ContactListFragment extends Fragment {
             // TODO: 28.01.2018 Low Реализовать информативное и красивое уведомление об удалении
             Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
             int position = viewHolder.getAdapterPosition();
-            deleteContact(position, contacts.get(position).getId());
+            deleteContact(position, contacts.get(position));
         }
     };
 
@@ -99,7 +99,7 @@ public class ContactListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        contacts = AddressBook.getInstance(getActivity()).getContacts();
+        contacts = AddressBook.getInstance(getActivity()).contactDao().getContacts();
         adapter = new ContactListAdapter(contacts);
         contactsRecyclerView.setAdapter(adapter);
         contactsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -187,8 +187,12 @@ public class ContactListFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public void deleteContact(int position, UUID contactId) {
-        AddressBook.getInstance(getActivity()).deleteContact(contactId);
+    public void deleteContact(int position) {
+        deleteContact(position, contacts.get(position));
+    }
+
+    public void deleteContact(int position, Contact contact) {
+        AddressBook.getInstance(getActivity()).contactDao().deleteContact(contact);
         contacts.remove(position);
         adapter.notifyItemRemoved(position);
         updateUI();
