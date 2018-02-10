@@ -2,6 +2,8 @@ package com.example.m.androidpenza;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +15,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,7 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.m.androidpenza.database.AddressBook;
+import com.example.m.androidpenza.database.ContactDB;
 import com.example.m.androidpenza.model.Contact;
 
 import java.util.Collections;
@@ -35,8 +38,16 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ContactListFragment extends Fragment {
+    private static final String TAG = "ContactListFragment";
+    public static final String STATE_CONTACTS_FETCHED = "contactsFetched";
+
     @BindView(R.id.contacts_recycler_view) SpeedyRecyclerView contactsRecyclerView;
     @BindView(R.id.empty_view) TextView emptyView;
     // Вопрос: Мне нужны константы, иницилизированные значениями из strings.xml, но объявить их
@@ -53,13 +64,13 @@ public class ContactListFragment extends Fragment {
 
     private ContactListAdapter adapter;
     private ContactListCallbacks listener;
-    private List<Contact> contacts;
+    private boolean contactsFetched = false;
 
     private String baseFontSize;
     private String sortOrder;
     private String scrollSpeed;
 
-    ItemTouchHelper.SimpleCallback deleteOnSwipeCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+    final ItemTouchHelper.SimpleCallback deleteOnSwipeCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
 
         @Override
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -69,9 +80,9 @@ public class ContactListFragment extends Fragment {
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
             // TODO: 28.01.2018 Low Реализовать информативное и красивое уведомление об удалении
-            Toast.makeText(getActivity(), "Deleted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.contact_deleted, Toast.LENGTH_SHORT).show();
             int position = viewHolder.getAdapterPosition();
-            deleteContact(position, contacts.get(position));
+            deleteContact(position, adapter.contacts.get(position));
         }
     };
 
@@ -89,6 +100,28 @@ public class ContactListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        List<Contact> contacts = ContactDB.getInstance(getActivity()).contactDao().getAll();
+        adapter = new ContactListAdapter(contacts);
+
+        if (savedInstanceState != null) {
+            contactsFetched = savedInstanceState.getBoolean(STATE_CONTACTS_FETCHED);
+        }
+        if (!contactsFetched) {
+            fetchContacts();
+        }
+    }
+
+    private void fetchContacts() {
+        Log.d(TAG, "Fetching contacts");
+        ContactsFetcher fetcher = new ContactsFetcher();
+        if (fetcher.isOnline(getContext())) {
+            fetcher.fetchContacts();
+            contactsFetched = true;
+        } else {
+            Log.d(TAG, "No internet connection");
+            Toast.makeText(getActivity(), R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Nullable
@@ -99,8 +132,6 @@ public class ContactListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        contacts = AddressBook.getInstance(getActivity()).contactDao().getContacts();
-        adapter = new ContactListAdapter(contacts);
         contactsRecyclerView.setAdapter(adapter);
         contactsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -118,6 +149,12 @@ public class ContactListFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(STATE_CONTACTS_FETCHED, contactsFetched);
+    }
+
     @SuppressWarnings("ConstantConditions")
     private void loadPreferences() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -127,7 +164,7 @@ public class ContactListFragment extends Fragment {
     }
 
     private void updateUI() {
-        if (contacts.size() == 0) {
+        if (adapter.contacts.size() == 0) {
             contactsRecyclerView.setVisibility(View.GONE);
             emptyView.setVisibility(View.VISIBLE);
         } else {
@@ -136,11 +173,11 @@ public class ContactListFragment extends Fragment {
         }
 
         if (sortOrder.equals(SORT_BY_DATE)) {
-            Collections.sort(contacts, new Contact.DateComparator());
+            Collections.sort(adapter.contacts, new Contact.DateComparator());
         } else if (sortOrder.equals(SORT_BY_NAME_AZ)) {
-            Collections.sort(contacts, new Contact.NameComparator());
+            Collections.sort(adapter.contacts, new Contact.NameComparator());
         } else if (sortOrder.equals(SORT_BY_NAME_ZA)) {
-            Collections.sort(contacts, new Contact.ReverseNameComparator());
+            Collections.sort(adapter.contacts, new Contact.ReverseNameComparator());
         }
         contactsRecyclerView.setFlingFactor(Integer.valueOf(scrollSpeed));
     }
@@ -182,20 +219,62 @@ public class ContactListFragment extends Fragment {
             } else if (id == R.id.settings) {
                 listener.onSettingsClicked();
                 return true;
+            } else  if (id == R.id.reload_contacts) {
+                fetchContacts();
+                return true;
             }
         }
         return super.onOptionsItemSelected(item);
     }
 
     public void deleteContact(int position) {
-        deleteContact(position, contacts.get(position));
+        deleteContact(position, adapter.contacts.get(position));
     }
 
     public void deleteContact(int position, Contact contact) {
-        AddressBook.getInstance(getActivity()).contactDao().deleteContact(contact);
-        contacts.remove(position);
+        ContactDB.getInstance(getActivity()).contactDao().deleteContact(contact);
+        adapter.contacts.remove(position);
         adapter.notifyItemRemoved(position);
         updateUI();
+    }
+
+    public class ContactsFetcher {
+        private static final String BASE_URL = "https://my.api.mockaroo.com/";
+
+        public void fetchContacts() {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
+
+            MockarooService service = retrofit.create(MockarooService.class);
+
+            service.getContacts().subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .map(ContactConverters::MockarooToContact)
+                    .subscribe(this::handleSuccess, this::handleError);
+        }
+
+        @SuppressWarnings("ConstantConditions")
+        public boolean isOnline(Context context) {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+            return networkInfo != null && networkInfo.isConnected();
+        }
+
+        private void handleSuccess(@io.reactivex.annotations.NonNull List<Contact> c) {
+            Log.d(TAG, "Successfully fetched " + c.size() + " contacts");
+            ContactDB.getInstance(getActivity()).contactDao().deleteAll(adapter.contacts);
+            ContactDB.getInstance(getActivity()).contactDao().addAll(c);
+            adapter.contacts = c;
+            adapter.notifyDataSetChanged();
+            updateUI();
+        }
+
+        private void handleError(@io.reactivex.annotations.NonNull Throwable e) {
+            Log.w(TAG, "Fetch error: " + e);
+        }
     }
 
     public interface ContactListCallbacks {
@@ -244,7 +323,7 @@ public class ContactListFragment extends Fragment {
     }
 
     private class ContactListAdapter extends RecyclerView.Adapter<ViewHolder> {
-        private List<Contact> contacts;
+        public List<Contact> contacts;
 
         ContactListAdapter(List<Contact> contacts) {
             this.contacts = contacts;

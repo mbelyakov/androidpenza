@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.m.androidpenza.database.AddressBook;
+import com.example.m.androidpenza.database.ContactDB;
 import com.example.m.androidpenza.model.Contact;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 
@@ -70,7 +70,7 @@ public class ContactFragment extends Fragment {
 
         if (getArguments() != null) {
             UUID contactId = UUID.fromString(getArguments().getString(CONTACT_ID));
-            contact = AddressBook.getInstance(getActivity()).contactDao().getContact(contactId);
+            contact = ContactDB.getInstance(getActivity()).contactDao().getContact(contactId);
             createNewContact = false;
         } else {
             contact = new Contact();
@@ -162,7 +162,7 @@ public class ContactFragment extends Fragment {
         newContact.setSurname(surname.getText().toString());
         newContact.setPhoneNumber(phoneNumber.getText().toString());
         newContact.setColor(cardColor);
-        AddressBook.getInstance(getActivity()).contactDao().addContact(newContact);
+        ContactDB.getInstance(getActivity()).contactDao().addContact(newContact);
     }
 
     private void updateContact() {
@@ -171,6 +171,6 @@ public class ContactFragment extends Fragment {
         contact.setSurname(surname.getText().toString());
         contact.setPhoneNumber(phoneNumber.getText().toString());
         contact.setColor(cardColor);
-        AddressBook.getInstance(getActivity()).contactDao().updateContact(contact);
+        ContactDB.getInstance(getActivity()).contactDao().updateContact(contact);
     }
 }

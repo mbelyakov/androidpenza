@@ -23,7 +23,7 @@ public class Contact {
     private String firstName;
     private String middleName;
     private String surname;
-    private String phoneNumber; // TODO: 07.02.2018 @NonNull?
+    private String phoneNumber;
     private int photo;
     private Date createDate;
     private int color;

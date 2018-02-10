@@ -10,19 +10,19 @@ import com.example.m.androidpenza.model.Contact;
 
 @Database(entities = {Contact.class}, version = 1)
 @TypeConverters({Converters.class})
-public abstract class AddressBook extends RoomDatabase {
+public abstract class ContactDB extends RoomDatabase {
     private static final String DATABASE_NAME = "Contacts.db";
-    private static AddressBook ourInstance;
+    private static ContactDB ourInstance;
     private static final Object lock = new Object();
 
     public abstract ContactDAO contactDao();
 
-    public static AddressBook getInstance(Context context) {
+    public static ContactDB getInstance(Context context) {
         synchronized (lock) {
             if (ourInstance == null) {
                 ourInstance = Room.databaseBuilder(context.getApplicationContext(),
-                        AddressBook.class, DATABASE_NAME)
-                        .allowMainThreadQueries() // TODO: 07.02.2018 Да-да, это плохая практика, работу с БД надо вынести в отдельный от UI поток. Но пока не знаю как это сделать
+                        ContactDB.class, DATABASE_NAME)
+                        .allowMainThreadQueries() // TODO: работу с БД надо вынести в io поток.
                         .build();
             }
         }

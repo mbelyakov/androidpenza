@@ -14,7 +14,7 @@ import java.util.UUID;
 @Dao
 public interface ContactDAO {
     @Query("SELECT * FROM contact")
-    List<Contact> getContacts();
+    List<Contact> getAll();
 
     @Query("SELECT * FROM contact WHERE _id = :id")
     Contact getContact(UUID id);
@@ -22,11 +22,15 @@ public interface ContactDAO {
     @Insert
     void addContact(Contact contact);
 
+    @Insert
+    void addAll(List<Contact> contacts);
+
     @Update
     void updateContact(Contact contact);
 
     @Delete
     void deleteContact(Contact contact);
+
+    @Delete
+    void deleteAll(List<Contact> contacts);
 }
-
-

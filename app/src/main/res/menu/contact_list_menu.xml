@@ -3,10 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/reload_contacts"
+        android:icon="@android:drawable/ic_popup_sync"
+        android:title="@string/reload_contacts"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/new_contact"
         android:icon="@android:drawable/ic_menu_add"
         android:title="@string/menu_new_contact"
-        app:showAsAction="ifRoom|withText" />
+        app:showAsAction="always|withText" />
     <item
         android:id="@+id/settings"
         android:title="@string/settings"
