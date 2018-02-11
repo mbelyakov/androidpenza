@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.m.androidpenza.database.ContactDAO;
 import com.example.m.androidpenza.database.ContactDB;
 import com.example.m.androidpenza.model.Contact;
 
@@ -65,6 +66,7 @@ public class ContactListFragment extends Fragment {
     private ContactListAdapter adapter;
     private ContactListCallbacks listener;
     private boolean contactsFetched = false;
+    private ContactDAO dao;
 
     private String baseFontSize;
     private String sortOrder;
@@ -100,8 +102,9 @@ public class ContactListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        dao = ContactDB.getInstance(getActivity()).contactDao();
 
-        List<Contact> contacts = ContactDB.getInstance(getActivity()).contactDao().getAll();
+        List<Contact> contacts = dao.getAll();
         adapter = new ContactListAdapter(contacts);
 
         if (savedInstanceState != null) {
@@ -219,7 +222,7 @@ public class ContactListFragment extends Fragment {
             } else if (id == R.id.settings) {
                 listener.onSettingsClicked();
                 return true;
-            } else  if (id == R.id.reload_contacts) {
+            } else if (id == R.id.reload_contacts) {
                 fetchContacts();
                 return true;
             }
@@ -232,7 +235,7 @@ public class ContactListFragment extends Fragment {
     }
 
     public void deleteContact(int position, Contact contact) {
-        ContactDB.getInstance(getActivity()).contactDao().deleteContact(contact);
+        dao.deleteContact(contact);
         adapter.contacts.remove(position);
         adapter.notifyItemRemoved(position);
         updateUI();
@@ -265,8 +268,8 @@ public class ContactListFragment extends Fragment {
 
         private void handleSuccess(@io.reactivex.annotations.NonNull List<Contact> c) {
             Log.d(TAG, "Successfully fetched " + c.size() + " contacts");
-            ContactDB.getInstance(getActivity()).contactDao().deleteAll(adapter.contacts);
-            ContactDB.getInstance(getActivity()).contactDao().addAll(c);
+            dao.clearDB();
+            dao.addAll(c);
             adapter.contacts = c;
             adapter.notifyDataSetChanged();
             updateUI();

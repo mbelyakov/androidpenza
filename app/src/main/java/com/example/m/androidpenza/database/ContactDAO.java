@@ -33,4 +33,7 @@ public interface ContactDAO {
 
     @Delete
     void deleteAll(List<Contact> contacts);
+
+    @Query("DELETE FROM contact")
+    void clearDB();
 }
