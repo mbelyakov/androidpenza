@@ -12,10 +12,14 @@ import android.support.v7.widget.Toolbar;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity
-        implements ContactListFragment.ContactListCallbacks, EditDeleteDialogFragment.EditDeleteDialogCallbacks {
+        implements ContactListFragment.ContactListCallbacks,
+        EditDeleteDialogFragment.EditDeleteDialogCallbacks,
+        ContactFragment.ContactCallbacks {
 
-    private static final String POSITION = "position";
-    private static final String CONTACT_ID = "contact_id";
+    public static final String POSITION = "position";
+    public static final String CONTACT_ID = "contact_id";
+
+    private final ContactListFragment contactListFragment = new ContactListFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +33,8 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.container);
         if (fragment == null) {
-            fragment = new ContactListFragment();
             fm.beginTransaction()
-                    .add(R.id.container, fragment)
+                    .add(R.id.container, contactListFragment)
                     .commit();
         }
     }
@@ -80,5 +83,20 @@ public class MainActivity extends AppCompatActivity
             int position = dialog.getArguments().getInt(POSITION);
             fragment.deleteContact(position);
         }
+    }
+
+    @Override
+    public void onCancelClicked() {
+        gotoFragment(contactListFragment);
+    }
+
+    @Override
+    public void onSaveNewContactClicked() {
+        gotoFragment(contactListFragment);
+    }
+
+    @Override
+    public void onSaveEditedContactClicked() {
+        gotoFragment(contactListFragment);
     }
 }

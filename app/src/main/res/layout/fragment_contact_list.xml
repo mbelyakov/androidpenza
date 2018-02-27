@@ -15,4 +15,6 @@
         android:gravity="center"
         android:text="@string/empty_list"
         android:visibility="gone" />
+
+    <include layout="@layout/progressbar" />
 </FrameLayout>

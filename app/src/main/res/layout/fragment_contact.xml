@@ -22,6 +22,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/description_photo"
             android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher_round"
             tools:src="@mipmap/ic_launcher" />
 
         <EditText
@@ -99,5 +100,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/button_save" />
+
+        <include layout="@layout/progressbar" />
     </RelativeLayout>
 </ScrollView>

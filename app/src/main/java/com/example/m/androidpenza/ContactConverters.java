@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ContactConverters {
 
-    public static final int DEFAULT_ALPHA_MASK = 0x40FFFFFF; // С альфой 0xFF цвета слишком насыщенные
+    private static final int DEFAULT_ALPHA_MASK = 0x40FFFFFF; // С альфой 0xFF цвета слишком насыщенные
 
     public static Contact MockarooToContact(MockarooContact m) {
         Contact c = new Contact();

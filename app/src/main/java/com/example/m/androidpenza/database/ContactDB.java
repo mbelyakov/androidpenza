@@ -20,10 +20,7 @@ public abstract class ContactDB extends RoomDatabase {
     public static ContactDB getInstance(Context context) {
         synchronized (lock) {
             if (ourInstance == null) {
-                ourInstance = Room.databaseBuilder(context.getApplicationContext(),
-                        ContactDB.class, DATABASE_NAME)
-                        .allowMainThreadQueries() // TODO: работу с БД надо вынести в io поток.
-                        .build();
+                ourInstance = Room.databaseBuilder(context.getApplicationContext(), ContactDB.class, DATABASE_NAME).build();
             }
         }
         return ourInstance;
