@@ -16,7 +16,7 @@ public class EditDeleteDialogFragment extends DialogFragment {
         if (context instanceof EditDeleteDialogCallbacks) {
             listener = (EditDeleteDialogCallbacks) context;
         } else {
-            throw new RuntimeException(context.toString() + " must implement ContactListCallbacks");
+            throw new RuntimeException(context.toString() + " must implement EditDeleteDialogCallbacks");
         }
     }
 

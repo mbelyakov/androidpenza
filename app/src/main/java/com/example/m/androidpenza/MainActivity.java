@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity
 
     public static final String POSITION = "position";
     public static final String CONTACT_ID = "contact_id";
+    private static final String TAG = "MainActivity";
 
     private final ContactListFragment contactListFragment = new ContactListFragment();
 

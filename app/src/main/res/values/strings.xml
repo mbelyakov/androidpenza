@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidPenza11</string>
+    <string name="app_name">AndroidPenza12</string>
     <string name="menu_new_contact">Новый</string>
     <string name="header_contacts">Контакты</string>
     <string name="empty_list">Список пуст</string>
@@ -13,10 +13,15 @@
     <string name="hint_phone_number">+79995555555</string>
     <string name="button_color">Цвет</string>
     <string name="button_save">Сохранить</string>
+    <string name="reload_contacts">Обновить</string>
 
     <string name="dialog_edit_delete">Что будем делать с контактом?</string>
     <string name="dialog_edit">Изменить</string>
     <string name="dialog_delete">Удалить</string>
+
+    <string name="dialog_photo_select">Изображение контакта</string>
+    <string name="dialog_gallery">Галерея</string>
+    <string name="dialog_camera">Сделать фотографию</string>
 
     <string name="settings">Настройки</string>
 
@@ -42,5 +47,4 @@
     <string name="pref_database">База данных</string>
     <string name="pref_db_sqlite">SQLite</string>
     <string name="pref_db_realm">Realm</string>
-    <string name="reload_contacts">Обновить</string>
 </resources>
